@@ -1,1 +1,1 @@
-# Web-interface-programming - Programowanie interfejsów webowych
+# Web interface programming - Programowanie interfejsów webowych
