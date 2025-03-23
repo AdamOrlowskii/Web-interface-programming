@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Kup pan książkę!</title>
+</head>
+
+<body>
+    <header>
+        <h1>Kup pan książkę!</h1>
+        <p>Aplikacja, w której znajdziesz każdą książkę.</p>
+        <button id="register-btn">Zarejestruj się</button>
+        <button id="login-btn">Zaloguj się</button>
+        <button id="cart-btn">🛒 Koszyk</button>
+    </header>
+    <main>
+        <aside>
+            <h3>Kategorie:</h3>
+
+            <label for="search">Szukaj:</label>
+            <input type="text" id="search" placeholder="Wpisz tytuł lub autora">
+            <label for="category">Kategoria:</label>
+            <select id="category">
+                <option value="">Wybierz kategorię</option>
+                <option value="Okładka twarda">Okładka twarda</option>
+                <option value="Okładka miękka">Okładka miękka</option>
+                <option value="Audiobook">Audiobook</option>
+                <option value="Ebook">Ebook</option>
+            </select>
+            <label for="price">Cena:</label>
+            <input type="range" id="price" min="0" max="200" value="0" oninput="priceOutput.value = price.value">
+            <output id="priceOutput">0</output> zł
+            <button id="search-btn">Wyszukaj</button>
+        </aside>
+
+        <section class="results">
+            <h2>Wyniki wyszukiwania:</h2>
+
+            <div class="book">
+                <h3>Wschód słońca w dniu dożynek. Igrzyska śmierci. Tom 5</h3>
+                <p>Autor: Suzanne Collins</p>
+                <p>Cena: 39,99 zł</p>
+                <button>Dodaj do koszyka</button>
+            </div>
+
+            <div class="book">
+                <h3>Rozdroże kruków</h3>
+                <p>Autor: Andrzej Sapkowski</p>
+                <p>Cena: 49,99 zł</p>
+                <button>Dodaj do</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        Adam Orłowski 2025<br>Strona nie wykorzystuje plików Cookies.<br>W zasadzie to niczego nie wykorzystuje.<br>Ani
+        nie robi.<br>Jeszcze.
+    </footer>
+</body>
+
+</html>
