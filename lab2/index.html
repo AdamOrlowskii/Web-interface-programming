@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <input type="text" id="taskInput" placeholder="Dodaj nowe zadanie">
+        <button id="addTaskButton">Dodaj</button>
+
+        <h2>Lista zadań</h2>
+        <ul id="taskList">
+        </ul>
+        <button id="undoButton">Cofnij usunięcie</button>
+    </div>
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <p id="modalText">Czy na pewno chcesz usunąć zadanie o treści:</p>
+            <button id="confirmDelete">Tak</button>
+            <button id="cancelDelete">Nie</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

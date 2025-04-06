@@ -1,0 +1,81 @@
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 16px;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 16px;
+    background-color: rgb(122, 193, 240);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+}
+
+input[type="text"] {
+    border-radius: 20px;
+    width: 20%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+#taskList {
+    margin-top: 0;
+    padding-top: 0;
+    height: auto;
+    display: block;
+}
+
+button {
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-left: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: rgb(91, 174, 238);
+    color: white;
+}
+
+button:hover {
+    background-color: rgb(70, 163, 235);
+}
+
+ul {
+    padding: 25px;
+}
+
+li {
+    padding: 10px;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: grey;
+}
+
+.date {
+    color: grey;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    width: 300px;
+}
