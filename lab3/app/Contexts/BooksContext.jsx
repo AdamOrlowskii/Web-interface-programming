@@ -1,43 +1,77 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { collection, getDocs, addDoc, query, where } from "firebase/firestore";
+import { db } from "../firebase";
+import { useAuth } from "./AuthContext";
 
-export const BooksContext = createContext();
+const BooksContext = createContext();
 
-export const BooksProvider = ({ children }) => {
-  const [bookList, setBookList] = useState([
-    {
-      id: 1,
-      title: "Wiedźmin: Ostatnie życzenie",
-      author: "Andrzej Sapkowski",
-      price: 29.99,
-      category: "okładka miękka",
-    },
-    {
-      id: 2,
-      title: "Lśnienie",
-      author: "Stephen King",
-      price: 39.99,
-      category: "okładka twarda",
-    },
-    {
-      id: 3,
-      title: "Harry Pjoter i Kamień Filozoficzny",
-      author: "J.K. Rowling",
-      price: 49.99,
-      category: "audiobook",
-    },
-    {
-      id: 4,
-      title: "Bezsenność",
-      author: "Stephen King",
-      price: 19.99,
-      category: "ebook",
+export function BooksProvider({ children }) {
+  const [books, setBooks] = useState([]);
+  const [filteredBooks, setFilteredBooks] = useState([]);
+  const [showOnlyMyBooks, setShowOnlyMyBooks] = useState(false);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  useEffect(() => {
+    if (showOnlyMyBooks && user) {
+      setFilteredBooks(books.filter(book => book.userId === user.uid));
+    } else {
+      setFilteredBooks(books);
     }
+  }, [showOnlyMyBooks, books, user]);
 
-  ]);
+  const fetchBooks = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "books"));
+      const booksData = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setBooks(booksData);
+      setFilteredBooks(booksData);
+    } catch (error) {
+      console.error("Error fetching books:", error);
+    }
+  };
+
+  const addBook = async (bookData) => {
+    try {
+      const docRef = await addDoc(collection(db, "books"), {
+        ...bookData,
+        userId: user.uid,
+        userName: user.displayName,
+        createdAt: new Date().toISOString()
+      });
+      await fetchBooks();
+      return docRef.id;
+    } catch (error) {
+      console.error("Error adding book:", error);
+      throw error;
+    }
+  };
+
+  const toggleMyBooks = () => {
+    setShowOnlyMyBooks(!showOnlyMyBooks);
+  };
+
+  const value = {
+    books: filteredBooks,
+    addBook,
+    showOnlyMyBooks,
+    toggleMyBooks,
+    isAuthenticated: !!user
+  };
 
   return (
-    <BooksContext.Provider value={{ bookList, setBookList }}>
+    <BooksContext.Provider value={value}>
       {children}
     </BooksContext.Provider>
   );
+}
+
+export function useBooks() {
+  return useContext(BooksContext);
 }

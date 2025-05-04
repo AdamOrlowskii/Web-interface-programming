@@ -1,5 +1,6 @@
-import { useContext, useState } from "react";
-import { BooksContext } from "../Contexts/BooksContext";
+import { useState } from "react";
+import { useBooks } from "../Contexts/BooksContext";
+import { useAuth } from "../Contexts/AuthContext";
 import TypeSelector from "../Components/TypeSelector";
 
 export function meta() {
@@ -10,14 +11,15 @@ export function meta() {
 }
 
 export default function New() {
-    const { bookList, setBookList } = useContext(BooksContext);
+    const { addBook } = useBooks();
+    const { user } = useAuth();
 
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
     const [price, setPrice] = useState("");
     const [category, setCategory] = useState("okładka miękka");
 
-    const handleAddBook = (e) => {
+    const handleAddBook = async (e) => {
         e.preventDefault();
 
         if (!title || !author || !price) {
@@ -25,20 +27,27 @@ export default function New() {
             return;
         }
 
-        const newBook = {
-            id: bookList.length + 1,
-            title: title,
-            author: author,
-            price: parseFloat(price),
-            category: category,
-        };
+        if (!user) {
+            alert("Musisz być zalogowany, aby dodać książkę!");
+            return;
+        }
 
-        setBookList((prev) => [...prev, newBook]);
+        try {
+            await addBook({
+                title: title,
+                author: author,
+                price: parseFloat(price),
+                category: category,
+            });
 
-        setTitle("");
-        setAuthor("");
-        setPrice("");
-        setCategory("okładka miękka");
+            setTitle("");
+            setAuthor("");
+            setPrice("");
+            setCategory("okładka miękka");
+        } catch (error) {
+            console.error("Error adding book:", error);
+            alert("Wystąpił błąd podczas dodawania książki.");
+        }
     };
 
     return (

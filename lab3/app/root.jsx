@@ -9,6 +9,7 @@ import {
 
 import "./app.css";
 import { BooksProvider } from "./Contexts/BooksContext";
+import { AuthProvider } from "./Contexts/AuthContext";
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer";
 
@@ -45,13 +46,15 @@ export function Layout({ children }) {
 
 export default function App() {
   return (
-    <BooksProvider>
-      <div style={{ paddingBottom: "4rem" }}>
-        <NavBar />
-        <Outlet />
-      </div>
-      <Footer />
-    </BooksProvider>
+    <AuthProvider>
+      <BooksProvider>
+        <div style={{ paddingBottom: "4rem" }}>
+          <NavBar />
+          <Outlet />
+        </div>
+        <Footer />
+      </BooksProvider>
+    </AuthProvider>
   );
 }
 
